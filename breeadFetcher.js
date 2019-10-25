@@ -4,26 +4,26 @@
 
 const request = require('request');
 
-const fetchBreedDecs = function(input, callback) {
-  const url = "https://api.thecatapi.com/v1/breeds/search?q=sib" + input;
+const fetcher = function(input) {
+  // const url = "https://api.thecatapi.com/v1/breeds/search?q=sib";
+  const url = "https://api.thecatapi.com/v1/breeds/search?q=" + input;
 
   request(url, (error, response, body) => {
     if (body === '[]') {
-      callback('Error - Breed Not Found');
+      console.log('Error - Breed Not Found');
 
     } else if (error) {
-      callback(error);
+    console.log('Error - URL issue');
 
     } else {
-      let data = JSON.parse(body);
-      //console.log(typeof body)
+    //console.log(typeof body)
+      const data = JSON.parse(body);
       let catDesc = data[0].description;
-      callback(null, catDesc);
-  
+      console.log(catDesc);
     }
+  
   });
-
 };
 
-module.exports = {fetchBreedDecs};
-
+const url = process.argv[2];
+fetcher(url);
